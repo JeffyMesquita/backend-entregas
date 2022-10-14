@@ -1,24 +1,24 @@
-import { prisma } from "../../../../database/prismaClient";
-import { hash } from "bcrypt";
+import { prisma } from '../../../../database/prismaClient';
+import { hash } from 'bcrypt';
 
 interface ICreateCliente {
   username: string;
   password: string;
 }
 
-class CreateClientUseCase {
+export class CreateClientUseCase {
   async execute({ username, password }: ICreateCliente) {
     // Validar se o client existe
     const clientExist = await prisma.clients.findFirst({
       where: {
         username: {
-          mode: "insensitive",
+          mode: 'insensitive',
         },
       },
     });
 
     if (clientExist) {
-      throw new Error("Client already exists");
+      throw new Error('Client already exists');
     }
 
     // Criptografar a senha
@@ -35,5 +35,3 @@ class CreateClientUseCase {
     return client;
   }
 }
-
-export { CreateClientUseCase };
