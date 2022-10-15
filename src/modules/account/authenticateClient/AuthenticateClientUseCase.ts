@@ -2,6 +2,8 @@ import { prisma } from '../../../database/prismaClient';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 
+const hashClient = process.env.HASH_CLIENT;
+
 interface IAuthenticateClient {
   username: string;
   password: string;
@@ -28,7 +30,7 @@ export class AuthenticateClientUseCase {
     }
 
     // Gerar o token
-    const token = sign({ username }, 'd0d615fcb528b3d881006b1f4c7e38db', {
+    const token = sign({ username }, `${hashClient}`, {
       subject: client.id,
       expiresIn: '1d',
     });
