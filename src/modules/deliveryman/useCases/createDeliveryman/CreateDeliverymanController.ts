@@ -4,6 +4,7 @@ import { CreateDeliverymanUseCase } from './CreateDeliverymanUseCase';
 export class CreateDeliverymanController {
   async handle(request: Request, response: Response) {
     const { username, password } = request.body;
+    console.log(username, password);
 
     const createDeliverymanUseCase = new CreateDeliverymanUseCase();
     const result = await createDeliverymanUseCase.execute({
